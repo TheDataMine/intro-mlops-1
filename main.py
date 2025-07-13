@@ -1,4 +1,3 @@
-import os
 import random
 import pandas as pd
 import numpy as np
@@ -10,6 +9,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 # set seed
 torch.manual_seed(42)
@@ -22,7 +22,8 @@ Normally we would put these in a gloabl file and import them but we will not do 
 """
 # Once you get root_directory_path set to point at the root of the working dir, you should NOT change it
 # only change the relative paths like data_path, model_path etc
-root_directory_path = Path("~/project/intro-mlops-1/").expanduser()
+# root_directory_path = Path("~/project/intro-mlops-1/").expanduser()
+root_directory_path = Path("~/work/datamine/projects/example").expanduser()
 
 data_path =  root_directory_path / "data.csv" # make sure to update the path when you create the new directories i.e / "data" / "data.csv"
 
@@ -38,8 +39,8 @@ data = data.dropna()
 feature_cols = data.columns[:-1].tolist()
 target_col = data.columns[-1]
 
-X = data[feature_cols].values
-y = data[target_col].values
+X = data[feature_cols].to_numpy()
+y = data[target_col].to_numpy()
 
 # Predicting string labels so encode them
 label_encoder = LabelEncoder()
@@ -49,9 +50,10 @@ y = label_encoder.fit_transform(y)
 X = (X - X.mean(axis=0)) / X.std(axis=0)
 
 # Split data 80/20
-split_idx = int(0.8 * len(X))
-X_train, X_test = X[:split_idx], X[split_idx:]
-y_train, y_test = y[:split_idx], y[split_idx:]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, train_size=0.8, random_state=42, shuffle=True
+)
+
 
 print(f"Training set size: {len(X_train)}")
 print(f"Test set size: {len(X_test)}")
@@ -161,7 +163,7 @@ plt.close()
 log_dir = root_directory_path / ""
 accuracy = accuracies[-1]
 print("Final Test Accuracy: ", round(accuracy, 4))
-with open(log_dir / 'results.txt', 'w') as f:
+with open(log_dir / 'results.log', 'w') as f:
     f.write(f"Final Test Accuracy: {accuracy}\n")
     f.write(f"Training epochs: {epochs}\n")
     f.write(f"Model architecture: SimpleNN with {input_size} input features\n")
