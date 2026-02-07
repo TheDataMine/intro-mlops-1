@@ -59,8 +59,8 @@ print(f"Test set size: {len(X_test)}")
 
 # Convert to PyTorch tensors (required)
 X_train = torch.FloatTensor(X_train)
-y_train = torch.LongTensor(y_train)
 X_test = torch.FloatTensor(X_test)
+y_train = torch.LongTensor(y_train)
 y_test = torch.LongTensor(y_test)
 
 # Create data loaders
