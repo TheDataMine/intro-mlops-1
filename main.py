@@ -135,7 +135,7 @@ for epoch in range(epochs):
 
 print("Training completed!")
 
-plot_directory = root_directory_path / "" # NOTE: change to "/plots"
+plot_directory = root_directory_path / "" # NOTE: change to "plots" when you make new directory
 
 # Save Training/Test Loss Plot
 plt.figure(figsize=(10, 6))
