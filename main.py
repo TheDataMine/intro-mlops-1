@@ -22,8 +22,7 @@ Normally we would put these in a gloabl file and import them but we will not do 
 """
 # Once you get root_directory_path set to point at the root of the working dir, you should NOT change it
 # only change the relative paths like data_path, model_path etc
-# root_directory_path = Path("~/project/intro-mlops-1/").expanduser()
-root_directory_path = Path("~/work/datamine/projects/example").expanduser()
+root_directory_path = Path("~/project04/intro-mlops-1/").expanduser()
 
 data_path =  root_directory_path / "data.csv" # make sure to update the path when you create the new directories i.e / "data" / "data.csv"
 
