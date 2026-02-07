@@ -58,13 +58,13 @@ print(f"Training set size: {len(X_train)}")
 print(f"Test set size: {len(X_test)}")
 
 # Convert to PyTorch tensors (required)
-X_train_tensor = torch.FloatTensor(X_train)
-y_train_tensor = torch.LongTensor(y_train)
-X_test_tensor = torch.FloatTensor(X_test)
-y_test_tensor = torch.LongTensor(y_test)
+X_train = torch.FloatTensor(X_train)
+y_train = torch.LongTensor(y_train)
+X_test = torch.FloatTensor(X_test)
+y_test = torch.LongTensor(y_test)
 
 # Create data loaders
-train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
+train_dataset = TensorDataset(X_train, y_train)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
 # Simple NN declaration
@@ -119,11 +119,11 @@ for epoch in range(epochs):
   # Evaluate on test set - Start
   model.eval()
   with torch.no_grad():
-    test_outputs = model(X_test_tensor)
-    test_loss = criterion(test_outputs, y_test_tensor)
+    test_outputs = model(X_test)
+    test_loss = criterion(test_outputs, y_test)
     _, predicted = torch.max(test_outputs, 1)
     # Calculate Accuracy
-    accuracy = (predicted == y_test_tensor).sum().item() / len(y_test_tensor)
+    accuracy = (predicted == y_test).sum().item() / len(y_test)
   # Evaluate on test set - End
 
   test_losses.append(test_loss.item())
